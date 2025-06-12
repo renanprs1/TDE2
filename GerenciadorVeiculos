@@ -1,0 +1,96 @@
+package cadastro;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class GerenciadorVeiculos {
+    private static ArrayList<Veiculo> veiculos = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int opcao;
+        
+        do {
+            exibirMenu();
+            opcao = scanner.nextInt();
+            scanner.nextLine(); // Limpar buffer
+            
+            switch (opcao) {
+                case 1:
+                    cadastrarVeiculo();
+                    break;
+                case 2:
+                    listarVeiculos();
+                    break;
+                case 3:
+                    System.out.println("Saindo do sistema...");
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        } while (opcao != 3);
+    }
+
+    private static void exibirMenu() {
+        System.out.println("\n=== MENU PRINCIPAL ===");
+        System.out.println("1 - Cadastrar novo veículo");
+        System.out.println("2 - Listar veículos");
+        System.out.println("3 - Sair");
+        System.out.print(">> ");
+    }
+
+    private static void cadastrarVeiculo() {
+        System.out.println("\n=== CADASTRAR VEÍCULO ===");
+        System.out.println("Tipo (1-Carro, 2-Moto, 3-Caminhão): ");
+        int tipo = scanner.nextInt();
+        scanner.nextLine(); // Limpar buffer
+        
+        System.out.print("Modelo: ");
+        String modelo = scanner.nextLine();
+        
+        System.out.print("Placa: ");
+        String placa = scanner.nextLine();
+        
+        System.out.print("Ano: ");
+        int ano = scanner.nextInt();
+        scanner.nextLine(); // Limpar buffer
+        
+        Veiculo veiculo = null;
+        
+        switch (tipo) {
+            case 1: // Carro
+                System.out.print("Quantidade de portas: ");
+                int portas = scanner.nextInt();
+                veiculo = new Carro(placa, modelo, ano, portas);
+                break;
+            case 2: // Moto
+                System.out.print("Cilindrada (cc): ");
+                int cilindrada = scanner.nextInt();
+                veiculo = new Moto(placa, modelo, ano, cilindrada);
+                break;
+            case 3: // Caminhão
+                System.out.print("Capacidade de carga (kg): ");
+                double carga = scanner.nextDouble();
+                veiculo = new Caminhao(placa, modelo, ano, carga);
+                break;
+            default:
+                System.out.println("Tipo de veículo inválido!");
+                return;
+        }
+        
+        veiculos.add(veiculo);
+        System.out.println("Veículo cadastrado com sucesso!");
+    }
+
+    private static void listarVeiculos() {
+        System.out.println("\n=== LISTA DE VEÍCULOS ===");
+        if (veiculos.isEmpty()) {
+            System.out.println("Nenhum veículo cadastrado.");
+        } else {
+            // Polimorfismo em ação - chamada do método exibirDados() específico de cada classe
+            for (Veiculo veiculo : veiculos) {
+                veiculo.exibirDados();
+            }
+        }
+    }
+}
