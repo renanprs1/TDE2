@@ -1,0 +1,25 @@
+package cadastro;
+
+class Caminhao extends Veiculo {
+    private double capacidadeCarga;
+
+    public Caminhao(String placa, String modelo, int ano, double capacidadeCarga) {
+        super(placa, modelo, ano);
+        this.capacidadeCarga = capacidadeCarga;
+    }
+
+    @Override
+    public void exibirDados() {
+        System.out.printf("Caminhão - Modelo: %s | Placa: %s | Ano: %d | Carga: %.2fkg%n",
+                getModelo(), getPlaca(), getAno(), capacidadeCarga);
+    }
+
+    public double getCapacidadeCarga() {
+        return capacidadeCarga;
+    }
+
+    public void setCapacidadeCarga(double capacidadeCarga) {
+        this.capacidadeCarga = capacidadeCarga;
+    }
+}
+
